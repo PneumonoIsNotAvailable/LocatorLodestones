@@ -1,1 +1,1 @@
-- Documenting fork features in README.md
+- Fix crash when joining a server after exiting one
