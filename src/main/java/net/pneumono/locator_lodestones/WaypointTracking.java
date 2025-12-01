@@ -60,7 +60,7 @@ public class WaypointTracking {
         ClientWaypointHandler waypointHandler = player.networkHandler.getWaypointHandler();
 
         for (TrackedWaypoint newWaypoint : WAYPOINTS.values()) {
-            if (oldWaypoints.containsKey(newWaypoint.getSource())) {
+            if (oldWaypoints.containsKey(newWaypoint.getSource()) && waypointHandler.waypoints.containsKey(newWaypoint.getSource())) {
                 waypointHandler.onUpdate(newWaypoint);
             } else {
                 waypointHandler.onTrack(newWaypoint);
