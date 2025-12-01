@@ -1,1 +1,1 @@
-- Fix crash when joining a server after exiting one
+- Fix crash when joining a server after exiting one, again
