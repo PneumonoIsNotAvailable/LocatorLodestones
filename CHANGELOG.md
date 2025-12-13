@@ -1,1 +1,1 @@
-- Fix crash when joining a server after exiting one, again
+- Add support for 1.21.11
