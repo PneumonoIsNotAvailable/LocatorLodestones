@@ -97,6 +97,11 @@ publishMods {
 		}
 
 		requires {
+			// PneumonoCore
+			id = "ZLKQjA7t"
+		}
+
+		requires {
 			// Fabric API
 			id = "P7dR8mSH"
 		}
