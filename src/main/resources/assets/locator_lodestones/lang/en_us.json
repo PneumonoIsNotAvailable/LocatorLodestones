@@ -2,5 +2,25 @@
     "modmenu.nameTranslation.locator_lodestones": "Locator Lodestones",
     "modmenu.summaryTranslation.locator_lodestones": "Adds Lodestones to the Player Locator Bar.",
     "modmenu.descriptionTranslation.locator_lodestones": "Adds Lodestones to the Player Locator Bar.\n\nLodestone Compasses in your Inventory (including in Bundles) add Waypoints to your Locator Bar.",
-    "locator_lodestones.reload": "Reloaded configs"
+
+    "configs.locator_lodestones.screen_title": "Locator Lodestones Configs",
+    "configs.category.locator_lodestones.display": "Display",
+    "configs.category.locator_lodestones.color": "Waypoint Color",
+
+    "configs.locator_lodestones.tab_forces_locator_bar": "Tab Forces Locator Bar",
+    "configs.locator_lodestones.tab_forces_locator_bar.tooltip": "Whether holding the tab button forces the locator bar to appear",
+    "configs.locator_lodestones.tab_shows_names": "Tab Shows Names",
+    "configs.locator_lodestones.tab_shows_names.tooltip": "Whether holding the tab button makes the names of compass waypoints appear",
+    "configs.locator_lodestones.show_recovery_compasses": "Show Recovery Compasses",
+    "configs.locator_lodestones.show_recovery_compasses.tooltip": "Whether Recovery Compasses also create waypoints",
+    "configs.locator_lodestones.show_bundled_compasses": "Show Bundled Compasses",
+    "configs.locator_lodestones.show_bundled_compasses.tooltip": "Whether compasses in Bundles also appear",
+    "configs.locator_lodestones.show_in_spectator": "Show in Spectator",
+    "configs.locator_lodestones.show_in_spectator.tooltip": "Whether compass waypoints still appear in Spectator Mode",
+    "configs.locator_lodestones.color_customization": "Color Customization",
+    "configs.locator_lodestones.color_customization.tooltip": "Whether the color of waypoints can be changed by putting a hex code in the item name",
+    "configs.locator_lodestones.lodestone_color": "Lodestone Color",
+    "configs.locator_lodestones.lodestone_color.tooltip": "The default color for Lodestone Compass waypoints. Can be set to 'random' to randomize it",
+    "configs.locator_lodestones.recovery_color": "Recovery Color",
+    "configs.locator_lodestones.recovery_color.tooltip": "The default color for Recovery Compass waypoints. Can be set to 'random' to randomize it"
 }

@@ -29,6 +29,9 @@
 	"entrypoints": {
 		"client": [
 			"net.pneumono.locator_lodestones.LocatorLodestones"
+		],
+		"modmenu": [
+			"net.pneumono.locator_lodestones.LocatorLodestonesModMenu"
 		]
 	},
 	"mixins": [
@@ -41,6 +44,7 @@
 		"fabricloader": ">=0.16.14",
 		"minecraft": ">=${min_supported} <=${max_supported}",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"pneumonocore": "*"
 	}
 }

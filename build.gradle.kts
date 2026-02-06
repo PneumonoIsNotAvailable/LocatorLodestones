@@ -1,5 +1,5 @@
 plugins {
-	id("fabric-loom") version "1.11-SNAPSHOT"
+	id("fabric-loom") version "1.15-SNAPSHOT"
 	id("maven-publish")
 	id("me.modmuss50.mod-publish-plugin") version "1.0.0"
 }
@@ -11,7 +11,18 @@ base.archivesName = "${property("mod_id")}"
 version = "${property("mod_version")}+${stonecutter.current.project}+${property("mod_subversion")}"
 
 repositories {
+	// Core
+	exclusiveContent {
+		forRepository {
+			maven("https://api.modrinth.com/maven")
+		}
+		filter {
+			includeGroup("maven.modrinth")
+		}
+	}
 
+	// Mod Menu
+	maven("https://maven.terraformersmc.com/")
 }
 
 loom {
@@ -25,6 +36,12 @@ dependencies {
 
 	// Fabric API
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
+
+	// PneumonoCore
+	modImplementation("maven.modrinth:pneumono_core:${property("core_version")}")
+
+	// Mod Menu
+	modImplementation("com.terraformersmc:modmenu:${property("modmenu_version")}")
 }
 
 tasks {
