@@ -25,7 +25,7 @@
 	"accessWidener": "locator_lodestones.accesswidener",
 	"license": "MIT",
 	"icon": "assets/locator_lodestones/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"client": [
 			"net.pneumono.locator_lodestones.LocatorLodestones"
