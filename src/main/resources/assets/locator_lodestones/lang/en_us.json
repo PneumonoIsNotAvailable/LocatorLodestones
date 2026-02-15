@@ -7,8 +7,11 @@
     "configs.category.locator_lodestones.display": "Display",
     "configs.category.locator_lodestones.color": "Waypoint Color",
 
-    "configs.locator_lodestones.tab_forces_locator_bar": "Tab Forces Locator Bar",
-    "configs.locator_lodestones.tab_forces_locator_bar.tooltip": "Whether holding the tab button forces the locator bar to appear",
+    "configs.locator_lodestones.tab_display": "Tab Display",
+    "configs.locator_lodestones.tab_display.tooltip": "Whether holding the tab button forces the locator bar to appear, is required for it to appear, or has no effect (default)",
+    "configs.locator_lodestones.tab_display.default": "Default",
+    "configs.locator_lodestones.tab_display.tab_forces": "Tab Forces",
+    "configs.locator_lodestones.tab_display.tab_only": "Tab Only",
     "configs.locator_lodestones.tab_shows_names": "Tab Shows Names",
     "configs.locator_lodestones.tab_shows_names.tooltip": "Whether holding the tab button makes the names of compass waypoints appear",
     "configs.locator_lodestones.show_recovery_compasses": "Show Recovery Compasses",

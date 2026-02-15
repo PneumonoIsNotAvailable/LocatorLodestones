@@ -2,15 +2,12 @@ package net.pneumono.locator_lodestones.config;
 
 import net.pneumono.locator_lodestones.LocatorLodestones;
 import net.pneumono.pneumonocore.config_api.ConfigApi;
-import net.pneumono.pneumonocore.config_api.configurations.AbstractConfiguration;
-import net.pneumono.pneumonocore.config_api.configurations.BooleanConfiguration;
-import net.pneumono.pneumonocore.config_api.configurations.ConfigSettings;
-import net.pneumono.pneumonocore.config_api.configurations.StringConfiguration;
+import net.pneumono.pneumonocore.config_api.configurations.*;
 import net.pneumono.pneumonocore.config_api.enums.LoadType;
 
 public class ConfigManager {
-    public static final BooleanConfiguration TAB_FORCES_LOCATOR_BAR = register("tab_forces_locator_bar", new BooleanConfiguration(
-            true, new ConfigSettings().category("display").loadType(LoadType.INSTANT).clientSide()
+    public static final EnumConfiguration<DisplaySetting> TAB_DISPLAY = register("tab_display", new EnumConfiguration<>(
+            DisplaySetting.DEFAULT, new ConfigSettings().category("display").loadType(LoadType.INSTANT).clientSide()
     ));
     public static final BooleanConfiguration TAB_SHOWS_NAMES = register("tab_shows_names", new BooleanConfiguration(
             true, new ConfigSettings().category("display").loadType(LoadType.INSTANT).clientSide()
@@ -42,8 +39,8 @@ public class ConfigManager {
         ConfigApi.finishRegistry(LocatorLodestones.MOD_ID);
     }
 
-    public static boolean tabForcesLocatorBar() {
-        return TAB_FORCES_LOCATOR_BAR.getValue();
+    public static DisplaySetting tabDisplaySetting() {
+        return TAB_DISPLAY.getValue();
     }
 
     public static boolean tabShowsNames() {
