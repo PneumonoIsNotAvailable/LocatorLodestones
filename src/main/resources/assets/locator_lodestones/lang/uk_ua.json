@@ -1,6 +1,29 @@
 {
     "modmenu.nameTranslation.locator_lodestones": "Locator Lodestones",
-    "modmenu.summaryTranslation.locator_lodestones": "Додає магнетит на панель локатора гравців",
-    "modmenu.descriptionTranslation.locator_lodestones": "Додає магнетит на панель локатора гравців.\n\nНамагнічені компаси у вашому інвентарі (зокрема в мішечках) додають маршрктні на вашу панель локатора.",
-    "locator_lodestones.reload": "Налаштування перезавантажено"
+    "modmenu.summaryTranslation.locator_lodestones": "Додає магнетит на панель локатора гравців.",
+    "modmenu.descriptionTranslation.locator_lodestones": "Додає магнетит на панель локатора гравців.\n\nНамагнічені компаси у вашому інвентарі (зокрема в мішечках) додають маршрутні точки на вашу панель локатора.",
+
+    "configs.locator_lodestones.screen_title": "Налаштування Locator Lodestones",
+    "configs.category.locator_lodestones.display": "Показ",
+    "configs.category.locator_lodestones.color": "Колір маршрутної точки",
+
+    "configs.locator_lodestones.tab_display": "Показ вкладок",
+    "configs.locator_lodestones.tab_display.tooltip": "Чи утримання кнопки вкладки примусово з'являється панель локатора, є обов'язковим для її появи чи не має ефекту (усталено).",
+    "configs.locator_lodestones.tab_display.default": "Усталено",
+    "configs.locator_lodestones.tab_display.tab_forces": "Сила вкладки",
+    "configs.locator_lodestones.tab_display.tab_only": "Лише вкладка",
+    "configs.locator_lodestones.tab_shows_names": "Вкладка показує назви",
+    "configs.locator_lodestones.tab_shows_names.tooltip": "Чи з'являються назви маршрутних точок компаса, якщо утримувати кнопку вкладки.",
+    "configs.locator_lodestones.show_recovery_compasses": "Показати компаси відновлення",
+    "configs.locator_lodestones.show_recovery_compasses.tooltip": "Чи компаси відновлення також створюють маршрутні точки.",
+    "configs.locator_lodestones.show_bundled_compasses": "Показати компаси в мішечках",
+    "configs.locator_lodestones.show_bundled_compasses.tooltip": "Чи також видно компаси в мішечках.",
+    "configs.locator_lodestones.show_in_spectator": "Показати спостерігачам",
+    "configs.locator_lodestones.show_in_spectator.tooltip": "Чи видно маршрутні точки компаса в режимі спостерігача.",
+    "configs.locator_lodestones.color_customization": "Налаштування кольору",
+    "configs.locator_lodestones.color_customization.tooltip": "Чи можна змінити колір маршрутних точок шляхом введення шістнадцяткового коду в назву предмета.",
+    "configs.locator_lodestones.lodestone_color": "Колір магнетита",
+    "configs.locator_lodestones.lodestone_color.tooltip": "Усталений колір для маршрутних точок компасу магнетита. Можна встановити «випадковий», аби зробити його випадковим.",
+    "configs.locator_lodestones.recovery_color": "Колір відновлення",
+    "configs.locator_lodestones.recovery_color.tooltip": "Усталений колір для маршрутних точок компаса відновлення. Аби зробити випадковим, можна встановити значення «випадковий»."
 }
