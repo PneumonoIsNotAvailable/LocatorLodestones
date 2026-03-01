@@ -1,6 +1,6 @@
-- Reworked configs to use PneumonoCore config system 
-  - This is backwards compatible with existing configs
-- Added Config Screen, accessible through Mod Menu
-- Changed mod environment in FMJ to `client`
-
-PneumonoCore is now a dependency of this mod!
+- Changed 'Tab Forces Locator Bar' config to 'Tab Display'
+  - The config now has 3 options:
+    - DEFAULT: The default behavior. Pressing TAB does nothing
+    - TAB_FORCES: The locator bar will always appear when pressing TAB
+    - TAB_ONLY: The locator bar will only appear when pressing TAB
+- Updated Ukrainian translation (StarmanMine142)
