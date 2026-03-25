@@ -118,18 +118,6 @@ publishMods {
 			id = "P7dR8mSH"
 		}
 	}
-
-	if (stonecutter.current.project == "26.1") {
-		discord {
-			webhookUrl = discordToken
-
-			username = "Locator Lodestones Updates"
-
-			avatarUrl = "https://github.com/PneumonoIsNotAvailable/LocatorLodestones/blob/master/src/main/resources/assets/locator_lodestones/icon.png?raw=true"
-
-			content = changelog.map { "# Locator Lodestones version ${project.property("mod_version")}\n<@&1472490332783378472>\n" + it }
-		}
-	}
 }
 
 // configure the maven publication
