@@ -1,12 +1,13 @@
 plugins {
-	id("fabric-loom") version "1.15-SNAPSHOT"
+	id("net.fabricmc.fabric-loom") version "1.15-SNAPSHOT"
 	id("maven-publish")
 	id("me.modmuss50.mod-publish-plugin") version "1.0.0"
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_21
-java.targetCompatibility = JavaVersion.VERSION_21
+java.sourceCompatibility = JavaVersion.VERSION_25
+java.targetCompatibility = JavaVersion.VERSION_25
 
+val awFile = "26.1.accesswidener"
 base.archivesName = "${property("mod_id")}"
 version = "${property("mod_version")}+${stonecutter.current.project}+${property("mod_subversion")}"
 
@@ -26,22 +27,21 @@ repositories {
 }
 
 loom {
-	accessWidenerPath = rootProject.file("src/main/resources/locator_lodestones.accesswidener")
+	accessWidenerPath = rootProject.file("src/main/resources/accesswideners/$awFile")
 }
 
 dependencies {
 	minecraft("com.mojang:minecraft:${stonecutter.current.version}")
-	mappings(loom.officialMojangMappings())
-	modImplementation("net.fabricmc:fabric-loader:0.17.3")
+	implementation("net.fabricmc:fabric-loader:0.18.4")
 
 	// Fabric API
-	modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
+	implementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
 
 	// PneumonoCore
-	modImplementation("maven.modrinth:pneumono_core:${property("core_version")}")
+	implementation("maven.modrinth:pneumono_core:${property("core_version")}")
 
 	// Mod Menu
-	modImplementation("com.terraformersmc:modmenu:${property("modmenu_version")}")
+	implementation("com.terraformersmc:modmenu:${property("modmenu_version")}")
 }
 
 tasks {
@@ -55,14 +55,15 @@ tasks {
 				mutableMapOf(
 					"version" to project.version,
 					"min_supported" to project.property("min_supported_version"),
-					"max_supported" to project.property("max_supported_version")
+					"max_supported" to project.property("max_supported_version"),
+					"aw_file" to awFile
 				)
 			)
 		}
 	}
 
 	withType<JavaCompile> {
-		options.release.set(21)
+		options.release.set(25)
 	}
 
 	java {
@@ -76,9 +77,16 @@ tasks {
 	}
 }
 
+stonecutter {
+	replacements.string {
+		direction = eval(current.version, ">=1.21.11")
+		replace("ResourceLocation", "Identifier")
+	}
+}
+
 publishMods {
-	file = tasks.remapJar.get().archiveFile
-	additionalFiles.from(tasks.remapSourcesJar.get().archiveFile)
+	file = tasks.jar.map { it.archiveFile.get() }
+	additionalFiles.from(tasks.named<org.gradle.jvm.tasks.Jar>("sourcesJar").map { it.archiveFile.get() })
 	displayName = "Locator Lodestones ${project.version}"
 	version = "${project.version}"
 	changelog = rootProject.file("CHANGELOG.md").readText()

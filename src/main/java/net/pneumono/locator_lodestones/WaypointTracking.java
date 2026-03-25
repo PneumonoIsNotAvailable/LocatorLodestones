@@ -1,7 +1,6 @@
 package net.pneumono.locator_lodestones;
 
 import com.mojang.datafixers.util.Either;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.waypoints.ClientWaypointManager;
 import net.minecraft.core.BlockPos;
@@ -22,6 +21,12 @@ import net.minecraft.world.waypoints.Waypoint;
 import net.pneumono.locator_lodestones.config.ConfigManager;
 
 import java.util.*;
+
+//? if >=26.1 {
+import net.fabricmc.fabric.api.networking.v1.FriendlyByteBufs;
+//?} else {
+/*import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+*///?}
 
 public class WaypointTracking {
     private static final Map<Either<UUID, String>, TrackedWaypoint> WAYPOINTS = new HashMap<>();
@@ -152,7 +157,7 @@ public class WaypointTracking {
     }
 
     private static FriendlyByteBuf bufFromPos(BlockPos pos) {
-        FriendlyByteBuf buf = PacketByteBufs.create();
+        FriendlyByteBuf buf = FriendlyByteBufs.create();
         buf.writeVarInt(pos.getX());
         buf.writeVarInt(pos.getY());
         buf.writeVarInt(pos.getZ());

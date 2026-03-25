@@ -5,7 +5,7 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.waypoints.WaypointStyleAsset;
 import net.minecraft.world.waypoints.WaypointStyleAssets;
 import net.pneumono.locator_lodestones.config.ConfigManager;
@@ -32,7 +32,7 @@ public class LocatorLodestones implements ClientModInitializer {
 		return ResourceKey.create(WaypointStyleAssets.ROOT_ID, id(path));
 	}
 
-	public static ResourceLocation id(String path) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	public static Identifier id(String path) {
+		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
 }
