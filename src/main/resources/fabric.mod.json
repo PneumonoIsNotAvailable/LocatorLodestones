@@ -29,9 +29,6 @@
 	"entrypoints": {
 		"client": [
 			"net.pneumono.locator_lodestones.LocatorLodestones"
-		],
-		"modmenu": [
-			"net.pneumono.locator_lodestones.LocatorLodestonesModMenu"
 		]
 	},
 	"mixins": [

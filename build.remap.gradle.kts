@@ -42,7 +42,7 @@ dependencies {
 	modImplementation("maven.modrinth:pneumono_core:${property("core_version")}")
 
 	// Mod Menu
-	modImplementation("com.terraformersmc:modmenu:${property("modmenu_version")}")
+	runtimeOnly("com.terraformersmc:modmenu:${property("modmenu_version")}")
 }
 
 tasks {
