@@ -157,7 +157,7 @@ public class WaypointTracking {
     }
 
     private static FriendlyByteBuf bufFromPos(BlockPos pos) {
-        FriendlyByteBuf buf = FriendlyByteBufs.create();
+        FriendlyByteBuf buf = /*? if >=26.1 {*/FriendlyByteBufs/*?} else {*//*PacketByteBufs*//*?}*/.create();
         buf.writeVarInt(pos.getX());
         buf.writeVarInt(pos.getY());
         buf.writeVarInt(pos.getZ());
