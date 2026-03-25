@@ -94,10 +94,13 @@ publishMods {
 	type = STABLE
 	modLoaders.addAll("fabric", "quilt")
 
-	dryRun = providers.environmentVariable("MODRINTH_TOKEN").getOrNull() == null
+	val modrinthToken = providers.environmentVariable("MODRINTH_TOKEN")
+	val discordToken = providers.environmentVariable("DISCORD_TOKEN")
+
+	dryRun = modrinthToken.getOrNull() == null || discordToken.getOrNull() == null
 
 	modrinth {
-		accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+		accessToken = modrinthToken
 		projectId = "pMBcsVIg"
 
 		minecraftVersionRange {
@@ -113,6 +116,18 @@ publishMods {
 		requires {
 			// Fabric API
 			id = "P7dR8mSH"
+		}
+	}
+
+	if (stonecutter.current.project == "26.1") {
+		discord {
+			webhookUrl = discordToken
+
+			username = "Locator Lodestones Updates"
+
+			avatarUrl = "https://github.com/PneumonoIsNotAvailable/LocatorLodestones/blob/master/src/main/resources/assets/locator_lodestones/icon.png?raw=true"
+
+			content = changelog.map { "# Locator Lodestones version ${project.property("mod_version")}\n<@&1472490332783378472>\n" + it }
 		}
 	}
 }
