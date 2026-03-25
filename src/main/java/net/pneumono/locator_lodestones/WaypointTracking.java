@@ -2,30 +2,30 @@ package net.pneumono.locator_lodestones;
 
 import com.mojang.datafixers.util.Either;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWaypointHandler;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.BundleContentsComponent;
-import net.minecraft.component.type.LodestoneTrackerComponent;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.text.Text;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.GlobalPos;
-import net.minecraft.world.World;
-import net.minecraft.world.waypoint.TrackedWaypoint;
-import net.minecraft.world.waypoint.Waypoint;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.waypoints.ClientWaypointManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.BundleContents;
+import net.minecraft.world.item.component.LodestoneTracker;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.waypoints.TrackedWaypoint;
+import net.minecraft.world.waypoints.Waypoint;
 import net.pneumono.locator_lodestones.config.ConfigManager;
 
 import java.util.*;
 
 public class WaypointTracking {
     private static final Map<Either<UUID, String>, TrackedWaypoint> WAYPOINTS = new HashMap<>();
-    private static final Map<Either<UUID, String>, Optional<Text>> WAYPOINT_NAMES = new HashMap<>();
+    private static final Map<Either<UUID, String>, Optional<Component>> WAYPOINT_NAMES = new HashMap<>();
     private static boolean dirty = false;
     private static long lastUpdateTime = 0;
 
@@ -33,7 +33,7 @@ public class WaypointTracking {
         return WAYPOINTS.values();
     }
 
-    public static Optional<Text> getWaypointName(Either<UUID, String> source) {
+    public static Optional<Component> getWaypointName(Either<UUID, String> source) {
         return WAYPOINT_NAMES.get(source);
     }
 
@@ -48,72 +48,68 @@ public class WaypointTracking {
         markWaypointsDirty();
     }
 
-    public static void updateWaypoints(ClientPlayerEntity player) {
-        if (!dirty || player == null || (lastUpdateTime + 20 > player.age && lastUpdateTime < player.age)) return;
-        lastUpdateTime = player.age;
+    public static void updateWaypoints(LocalPlayer player) {
+        if (!dirty || player == null || (lastUpdateTime + 20 > player.tickCount && lastUpdateTime < player.tickCount)) return;
+        lastUpdateTime = player.tickCount;
         dirty = false;
 
         Map<Either<UUID, String>, TrackedWaypoint> oldWaypoints = new HashMap<>(WAYPOINTS);
         WAYPOINTS.clear();
-        getWaypointsFromPlayer(player).forEach(waypoint -> WAYPOINTS.put(waypoint.getSource(), waypoint));
+        getWaypointsFromPlayer(player).forEach(waypoint -> WAYPOINTS.put(waypoint.id(), waypoint));
 
-        ClientWaypointHandler waypointHandler = player.networkHandler.getWaypointHandler();
+        ClientWaypointManager waypointHandler = player.connection.getWaypointManager();
 
         for (TrackedWaypoint newWaypoint : WAYPOINTS.values()) {
-            if (oldWaypoints.containsKey(newWaypoint.getSource()) && waypointHandler.waypoints.containsKey(newWaypoint.getSource())) {
-                waypointHandler.onUpdate(newWaypoint);
+            if (oldWaypoints.containsKey(newWaypoint.id()) && waypointHandler.waypoints.containsKey(newWaypoint.id())) {
+                waypointHandler.updateWaypoint(newWaypoint);
             } else {
-                waypointHandler.onTrack(newWaypoint);
+                waypointHandler.trackWaypoint(newWaypoint);
             }
         }
 
         for (TrackedWaypoint oldWaypoint : oldWaypoints.values()) {
-            if (!WAYPOINTS.containsKey(oldWaypoint.getSource())) {
-                waypointHandler.onUntrack(oldWaypoint);
+            if (!WAYPOINTS.containsKey(oldWaypoint.id())) {
+                waypointHandler.untrackWaypoint(oldWaypoint);
             }
         }
     }
 
-    private static List<TrackedWaypoint> getWaypointsFromPlayer(PlayerEntity player) {
+    private static List<TrackedWaypoint> getWaypointsFromPlayer(Player player) {
         WAYPOINT_NAMES.clear();
 
         List<ItemStack> stacks = new ArrayList<>();
-        DefaultedList<ItemStack> mainStacks = player.getInventory().getMainStacks();
+        NonNullList<ItemStack> mainStacks = player.getInventory().getNonEquipmentItems();
         if (mainStacks != null) {
-            stacks.addAll(player.getInventory().getMainStacks());
+            stacks.addAll(player.getInventory().getNonEquipmentItems());
         }
-        ItemStack offHandStack = player.getOffHandStack();
+        ItemStack offHandStack = player.getOffhandItem();
         if (offHandStack != null) {
-            stacks.add(player.getOffHandStack());
+            stacks.add(player.getOffhandItem());
         }
 
         List<TrackedWaypoint> waypoints = new ArrayList<>();
         for (ItemStack stack : stacks) {
-            //? if >=1.21.9 {
-            RegistryKey<World> dimension = player.getEntityWorld().getRegistryKey();
-            //?} else {
-            /*RegistryKey<World> dimension = player.getWorld().getRegistryKey();
-            *///?}
+            ResourceKey<Level> dimension = player.level().dimension();
             waypoints.addAll(getWaypointsFromStack(player, dimension, stack));
         }
         return waypoints;
     }
 
-    private static List<TrackedWaypoint> getWaypointsFromStack(PlayerEntity player, RegistryKey<World> dimension, ItemStack stack) {
+    private static List<TrackedWaypoint> getWaypointsFromStack(Player player, ResourceKey<Level> dimension, ItemStack stack) {
         List<TrackedWaypoint> waypoints = new ArrayList<>();
 
         if (ConfigManager.shouldShowRecovery()) {
-            Optional<GlobalPos> lastDeathPos = player.getLastDeathPos();
-            if (lastDeathPos.isPresent() && stack.isOf(Items.RECOVERY_COMPASS)) {
+            Optional<GlobalPos> lastDeathPos = player.getLastDeathLocation();
+            if (lastDeathPos.isPresent() && stack.is(Items.RECOVERY_COMPASS)) {
                 GlobalPos pos = lastDeathPos.get();
                 if (pos.dimension() == dimension && pos.pos() != null) {
-                    Waypoint.Config config = new Waypoint.Config();
+                    Waypoint.Icon config = new Waypoint.Icon();
                     config.style = LocatorLodestones.DEATH_STYLE;
                     config.color = Optional.ofNullable(
                             ColorHandler.getColor(stack).orElse(ConfigManager.getRecoveryColor().getColorWithAlpha())
                     );
                     Either<UUID, String> source = Either.right("death_" + pos);
-                    waypoints.add(new TrackedWaypoint.Positional(
+                    waypoints.add(new TrackedWaypoint.Vec3iWaypoint(
                             source,
                             config,
                             bufFromPos(pos.pos())
@@ -123,18 +119,18 @@ public class WaypointTracking {
             }
         }
 
-        LodestoneTrackerComponent trackerComponent = stack.get(DataComponentTypes.LODESTONE_TRACKER);
+        LodestoneTracker trackerComponent = stack.get(DataComponents.LODESTONE_TRACKER);
         if (trackerComponent != null && trackerComponent.target().isPresent()) {
 
             GlobalPos pos = trackerComponent.target().get();
             if (pos.dimension() == dimension && pos.pos() != null) {
-                Waypoint.Config config = new Waypoint.Config();
+                Waypoint.Icon config = new Waypoint.Icon();
                 config.style = LocatorLodestones.LODESTONE_STYLE;
                 config.color = Optional.ofNullable(
                         ColorHandler.getColor(stack).orElse(ConfigManager.getLodestoneColor().getColorWithAlpha())
                 );
                 Either<UUID, String> source = Either.right("lodestone_" + pos);
-                waypoints.add(new TrackedWaypoint.Positional(
+                waypoints.add(new TrackedWaypoint.Vec3iWaypoint(
                         source,
                         config,
                         bufFromPos(pos.pos())
@@ -144,9 +140,9 @@ public class WaypointTracking {
         }
 
         if (ConfigManager.shouldShowBundled()) {
-            BundleContentsComponent contentsComponent = stack.get(DataComponentTypes.BUNDLE_CONTENTS);
+            BundleContents contentsComponent = stack.get(DataComponents.BUNDLE_CONTENTS);
             if (contentsComponent != null) {
-                contentsComponent.stream().forEach(
+                contentsComponent.itemCopyStream().forEach(
                         bundledStack -> waypoints.addAll(getWaypointsFromStack(player, dimension, bundledStack))
                 );
             }
@@ -155,18 +151,18 @@ public class WaypointTracking {
         return waypoints;
     }
 
-    private static PacketByteBuf bufFromPos(BlockPos pos) {
-        PacketByteBuf buf = PacketByteBufs.create();
+    private static FriendlyByteBuf bufFromPos(BlockPos pos) {
+        FriendlyByteBuf buf = PacketByteBufs.create();
         buf.writeVarInt(pos.getX());
         buf.writeVarInt(pos.getY());
         buf.writeVarInt(pos.getZ());
         return buf;
     }
 
-    private static Optional<Text> getText(ItemStack stack) {
-        Text text = stack.get(DataComponentTypes.CUSTOM_NAME);
+    private static Optional<Component> getText(ItemStack stack) {
+        Component text = stack.get(DataComponents.CUSTOM_NAME);
         if (text == null) {
-            text = stack.get(DataComponentTypes.ITEM_NAME);
+            text = stack.get(DataComponents.ITEM_NAME);
         }
         return ColorHandler.removeColorCode(text);
     }

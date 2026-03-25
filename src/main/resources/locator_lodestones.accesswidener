@@ -1,5 +1,5 @@
 accessWidener v2 named
 
-accessible class net/minecraft/client/gui/hud/InGameHud$BarType
-accessible class net/minecraft/world/waypoint/TrackedWaypoint$Positional
-accessible field net/minecraft/client/world/ClientWaypointHandler waypoints Ljava/util/Map;
+accessible class net/minecraft/client/gui/Gui$ContextualInfo
+accessible class net/minecraft/world/waypoints/TrackedWaypoint$Vec3iWaypoint
+accessible field net/minecraft/client/waypoints/ClientWaypointManager waypoints Ljava/util/Map;

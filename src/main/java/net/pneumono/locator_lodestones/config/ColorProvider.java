@@ -1,6 +1,6 @@
 package net.pneumono.locator_lodestones.config;
 
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.util.ARGB;
 import net.pneumono.locator_lodestones.LocatorLodestones;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,6 +17,6 @@ public record ColorProvider(@Nullable Integer color) {
     }
 
     public @Nullable Integer getColorWithAlpha() {
-        return color == null ? null : ColorHelper.withAlpha(255, color);
+        return color == null ? null : ARGB.color(255, color);
     }
 }
