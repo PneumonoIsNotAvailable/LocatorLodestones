@@ -1,6 +1,2 @@
-- Changed 'Tab Forces Locator Bar' config to 'Tab Display'
-  - The config now has 3 options:
-    - DEFAULT: The default behavior. Pressing TAB does nothing
-    - TAB_FORCES: The locator bar will always appear when pressing TAB
-    - TAB_ONLY: The locator bar will only appear when pressing TAB
-- Updated Ukrainian translation (StarmanMine142)
+- Added support for 26.1
+- Migrated to Mojang Mappings
