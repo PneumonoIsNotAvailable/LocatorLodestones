@@ -7,7 +7,7 @@ plugins {
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
 
-val awFile = "1.21.6.accesswidener"
+val awFile = "1.21.6.classtweaker"
 base.archivesName = "${property("mod_id")}"
 version = "${property("mod_version")}+${stonecutter.current.project}+${property("mod_subversion")}"
 
@@ -27,7 +27,7 @@ repositories {
 }
 
 loom {
-	accessWidenerPath = rootProject.file("src/main/resources/accesswideners/$awFile")
+	accessWidenerPath = rootProject.file("src/main/resources/class_tweakers/$awFile")
 }
 
 dependencies {
@@ -57,7 +57,7 @@ tasks {
 					"version" to project.version,
 					"min_supported" to project.property("min_supported_version"),
 					"max_supported" to project.property("max_supported_version"),
-					"aw_file" to awFile
+					"ct_file" to awFile
 				)
 			)
 		}

@@ -22,7 +22,7 @@
 			}
 		}
 	},
-	"accessWidener": "accesswideners/${aw_file}",
+	"accessWidener": "class_tweakers/${ct_file}",
 	"license": "MIT",
 	"icon": "assets/locator_lodestones/icon.png",
 	"environment": "client",
