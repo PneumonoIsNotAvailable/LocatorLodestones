@@ -1,1 +1,1 @@
-- Added support for 26.1.X
+- Fixed mod not supporting >=26.1.2
