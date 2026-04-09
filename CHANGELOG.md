@@ -1,2 +1,1 @@
-- Added support for 26.1
-- Migrated to Mojang Mappings
+- Added support for 26.1.X
