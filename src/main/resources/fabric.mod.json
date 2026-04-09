@@ -39,7 +39,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.18.4",
-		"minecraft": ">=${min_supported} <=${max_supported}",
+		"minecraft": "${supported_versions}",
 		"java": ">=21",
 		"fabric-api": "*",
 		"pneumonocore": "*"
