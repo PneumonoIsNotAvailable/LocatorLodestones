@@ -55,7 +55,7 @@ tasks {
 				mutableMapOf(
 					"version" to project.property("mod_version"),
 					"supported_versions" to ">=${project.property("min_supported_version")} <=${project.property("max_supported_version")}",
-					"aw_file" to awFile
+					"ct_file" to awFile
 				)
 			)
 		}
