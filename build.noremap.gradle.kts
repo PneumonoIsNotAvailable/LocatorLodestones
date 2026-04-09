@@ -47,13 +47,13 @@ dependencies {
 tasks {
 	processResources {
 		inputs.property("version", project.version)
-		inputs.property("supported_versions", ">=${project.property("min_supported_version")} <=${project.property("max_supported_version")}")
+		inputs.property("supported_versions", "~${project.property("min_supported_version")}")
 
 		filesMatching("fabric.mod.json") {
 			expand(
 				mutableMapOf(
 					"version" to project.property("mod_version"),
-					"supported_versions" to ">=${project.property("min_supported_version")} <=${project.property("max_supported_version")}",
+					"supported_versions" to "~${project.property("min_supported_version")}",
 					"ct_file" to ctFile
 				)
 			)
