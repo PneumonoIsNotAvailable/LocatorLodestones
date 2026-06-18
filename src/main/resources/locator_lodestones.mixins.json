@@ -10,7 +10,7 @@
         "requireAnnotations": true
     },
     "client": [
-        "InGameHudMixin",
+        "HudMixin",
         "LocatorBarMixin",
         "PlayerInventoryMixin"
     ]

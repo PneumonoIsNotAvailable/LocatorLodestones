@@ -33,7 +33,7 @@ loom {
 dependencies {
 	minecraft("com.mojang:minecraft:${stonecutter.current.version}")
 	mappings(loom.officialMojangMappings())
-	modImplementation("net.fabricmc:fabric-loader:0.18.4")
+	modImplementation("net.fabricmc:fabric-loader:0.19.3")
 
 	// Fabric API
 	modImplementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")

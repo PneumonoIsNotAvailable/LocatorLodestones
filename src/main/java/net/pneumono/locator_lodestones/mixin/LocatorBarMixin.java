@@ -2,8 +2,6 @@ package net.pneumono.locator_lodestones.mixin;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.contextualbar.ContextualBarRenderer;
-import net.minecraft.client.gui.contextualbar.LocatorBarRenderer;
 import net.pneumono.locator_lodestones.WaypointNameRendering;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,14 +10,26 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+//? if >=26.2 {
+import net.minecraft.client.gui.contextualbar.ContextualBar;
+import net.minecraft.client.gui.contextualbar.LocatorBar;
+//?} else {
+/*import net.minecraft.client.gui.contextualbar.ContextualBarRenderer;
+import net.minecraft.client.gui.contextualbar.LocatorBarRenderer;
+*///?}
+
 //? if >=26.1 {
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 //?} else {
 /*import net.minecraft.client.gui.GuiGraphics;
 *///?}
 
-@Mixin(LocatorBarRenderer.class)
-public abstract class LocatorBarMixin implements ContextualBarRenderer {
+//? if >=26.2 {
+@Mixin(LocatorBar.class)
+//?} else {
+/*@Mixin(LocatorBarRenderer.class)
+*///?}
+public abstract class LocatorBarMixin implements /*? if >=26.2 {*/ContextualBar/*?} else {*//*ContextualBarRenderer*//*?}*/ {
     @Shadow
     @Final
     private Minecraft minecraft;

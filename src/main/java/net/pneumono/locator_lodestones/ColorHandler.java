@@ -12,6 +12,9 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+//? if >=26.2
+import net.minecraft.network.chat.TextColor;
+
 public class ColorHandler {
     public static Optional<Integer> getColor(ItemStack stack) {
         if (!ConfigManager.colorCustomization()) return Optional.empty();
@@ -60,7 +63,12 @@ public class ColorHandler {
         if (formatting == null) {
             return Optional.empty();
         } else {
-            Integer integer = formatting.getColor();
+            //? if >=26.2 {
+            TextColor textColor = TextColor.fromLegacyFormat(formatting);
+            Integer integer = textColor == null ? null : textColor.getValue();
+            //?} else {
+            /*Integer integer = formatting.getColor();
+            *///?}
             return integer == null ? Optional.empty() : Optional.of(ARGB.color(255, integer));
         }
     }

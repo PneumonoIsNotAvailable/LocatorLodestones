@@ -40,9 +40,11 @@ public class WaypointNameRendering {
         TrackedWaypoint bestWaypoint = null;
         double bestYaw = 61;
         for (TrackedWaypoint waypoint : WaypointTracking.getWaypoints()) {
-            //? if >=1.21.9 {
-            double yaw = waypoint.yawAngleToCamera(client.level, client.gameRenderer.getMainCamera(), entityTickProgress);
-            //?} else {
+            //? if >=26.2 {
+            double yaw = waypoint.yawAngleToCamera(client.level, client.gameRenderer.mainCamera(), entityTickProgress);
+            //?} else if >=1.21.9 {
+            /*double yaw = waypoint.yawAngleToCamera(client.level, client.gameRenderer.getMainCamera(), entityTickProgress);
+            *///?} else {
             /*double yaw = waypoint.yawAngleToCamera(client.level, client.gameRenderer.getMainCamera());
             *///?}
             double absYaw = Math.abs(yaw);

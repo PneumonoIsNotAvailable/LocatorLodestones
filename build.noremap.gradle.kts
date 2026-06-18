@@ -7,7 +7,7 @@ plugins {
 java.sourceCompatibility = JavaVersion.VERSION_25
 java.targetCompatibility = JavaVersion.VERSION_25
 
-val ctFile = "26.1.classtweaker"
+val ctFile = if (stonecutter.eval(stonecutter.current.version, ">=26.2")) "26.2.classtweaker" else "26.1.classtweaker"
 base.archivesName = "${property("mod_id")}"
 version = "${property("mod_version")}+${stonecutter.current.project}+${property("mod_subversion")}"
 
@@ -32,7 +32,7 @@ loom {
 
 dependencies {
 	minecraft("com.mojang:minecraft:${stonecutter.current.version}")
-	implementation("net.fabricmc:fabric-loader:0.18.4")
+	implementation("net.fabricmc:fabric-loader:0.19.3")
 
 	// Fabric API
 	implementation("net.fabricmc.fabric-api:fabric-api:${property("fabric_version")}")
@@ -116,7 +116,7 @@ publishMods {
 		}
 	}
 
-	if (stonecutter.current.project == "26.1") {
+	if (stonecutter.current.project == "26.2") {
 		discord {
 			webhookUrl = discordToken
 

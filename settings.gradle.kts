@@ -21,7 +21,7 @@ stonecutter {
 			}
 		}
 
-		controlledVersions("1.21.6", "1.21.9", "26.1")
-		vcsVersion = "26.1"
+		controlledVersions("1.21.6", "1.21.9", "26.1", "26.2")
+		vcsVersion = "26.2"
 	}
 }
