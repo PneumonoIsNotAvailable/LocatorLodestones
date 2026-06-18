@@ -1,1 +1,2 @@
-- Fixed mod not supporting >=26.1.2
+- Added support for 26.2
+- Fixed typo in author name
