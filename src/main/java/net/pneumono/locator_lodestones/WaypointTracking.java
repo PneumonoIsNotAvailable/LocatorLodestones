@@ -147,7 +147,7 @@ public class WaypointTracking {
         if (ConfigManager.shouldShowBundled()) {
             BundleContents contentsComponent = stack.get(DataComponents.BUNDLE_CONTENTS);
             if (contentsComponent != null) {
-                contentsComponent.itemCopyStream().forEach(
+                contentsComponent./*? if >=26.3 {*/itemCopies()/*?} else {*//*itemCopyStream()*//*?}*/.forEach(
                         bundledStack -> waypoints.addAll(getWaypointsFromStack(player, dimension, bundledStack))
                 );
             }
