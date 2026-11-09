@@ -1,2 +1,1 @@
-- Added support for 26.2
-- Fixed typo in author name
+- Added support for 26.3.X
